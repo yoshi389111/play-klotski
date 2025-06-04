@@ -90,7 +90,7 @@ function renderBoard() {
   board.innerHTML = "";
   for (const p of pieces) {
     const div = document.createElement("div");
-    div.className = "piece";
+    div.className = p.id === "1" ? "large-piece" : "piece";
     div.style.gridColumn = `${p.x + 1} / span ${p.w}`;
     div.style.gridRow = `${p.y + 1} / span ${p.h}`;
     div.textContent = p.id;

@@ -13,13 +13,25 @@ body {
   width: max-content;
 }
 
-.piece {
+.large-piece {
   background-color: lightcoral;
   border: 2px solid #333;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: black;
+  font-weight: bold;
+  user-select: none;
+  cursor: pointer;
+}
+
+.piece {
+  background-color: Bisque ;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
   font-weight: bold;
   user-select: none;
   cursor: pointer;
