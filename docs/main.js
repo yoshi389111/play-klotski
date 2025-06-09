@@ -349,6 +349,31 @@ function parseBoard(hexStr) {
       }
     }
   }
+  if (pieces["1"] === undefined || pieces["1"].w !== 2 || pieces["1"].h !== 2) {
+    throw new Error("Invalid board state: Piece '1' must be 2x2.");
+  }
+  for (const [id, piece] of Object.entries(pieces)) {
+    if (id !== "1") {
+      if (piece.w < 1 || piece.w > 2 || piece.h < 1 || piece.h > 2) {
+        throw new Error(`Invalid piece ${id}: Has an irregular shape.`);
+      }
+      if (piece.w === 2 && piece.h === 2) {
+        throw new Error(`Invalid piece ${id}: Cannot be 2x2.`);
+      }
+    }
+    for (const [otherId, otherPiece] of Object.entries(pieces)) {
+      if (id !== otherId && isOverlap(piece, 0, 0, otherPiece)) {
+        throw new Error(`Invalid piece ${id}: Overlaps with piece ${otherId}.`);
+      }
+    }
+  }
+  const pieceArea = Object.values(pieces).reduce(
+    (sum, p) => sum + p.w * p.h,
+    0
+  );
+  if (pieceArea + 2 !== BOARD_WIDTH * BOARD_HEIGHT) {
+    throw new Error(`Invalid board state: There should be two empty areas.`);
+  }
   return Object.values(pieces);
 }
 
