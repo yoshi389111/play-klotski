@@ -165,10 +165,23 @@ function autoMoveIfPossible(piece) {
     [0, 1], // down
   ];
   // Extract movable directions
-  let movable = dirs.filter((d) => isMovable(piece, ...d));
-  if (movable.length === 1) {
+  let movableDirs = dirs.filter((d) => isMovable(piece, ...d));
+  if (movableDirs.length === 1) {
     // If only one direction is movable, move in that direction
-    doMove(piece, ...movable[0]);
+    doMove(piece, ...movableDirs[0]);
+  } else if (
+    movableDirs.length === 2 &&
+    lastMovedPieceId === piece.id &&
+    lastMoveDirections.length > 0
+  ) {
+    // If two directions are movable and the last moved piece is the same,
+    // it will move to a different position than it was in before.
+    const [prevDx, prevDy] = lastMoveDirections[0];
+    if (prevDx === -movableDirs[0][0] && prevDy === -movableDirs[0][1]) {
+      doMove(piece, ...movableDirs[1]);
+    } else {
+      doMove(piece, ...movableDirs[0]);
+    }
   }
 }
 
